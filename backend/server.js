@@ -7,6 +7,8 @@ const { Server } = require('socket.io');
 const app = require('./app');
 const PORT = process.env.PORT;
 
+const { setupMetricsSocket } = require('./sockets/metrics.socket');
+
 // Crear Servidor HTTP montado sobre Express
 const server = http.createServer(app);
 
@@ -18,15 +20,8 @@ const io = new Server(server, {
     }
 });
 
-// Escuchar evento de conexión
-io.on('connection', (socket) => {
-    console.log(`Cliente conectado con ID: ${socket.id}`)
-
-    // Detectar cuándo un cliente se desconecta
-    socket.on('disconnect', () => {
-        console.log(`Cliente desconectado: ${socket.id}`)
-    })
-})
+// Llamada a función de Socket.io
+setupMetricsSocket(io);
 
 // Activar servidor HTTP unificado para escuchar las peticiones en el puerto específicado
 server.listen(PORT, () => {
