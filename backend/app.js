@@ -10,4 +10,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// Importar rutas de metrics routes
+const metricsRoute = require('./routes/metrics.route');
+app.use('/api/metrics', metricsRoute);
+
 module.exports = app;
