@@ -8,6 +8,7 @@ const app = require('./app');
 const PORT = process.env.PORT;
 
 const { setupMetricsSocket } = require('./sockets/metrics.socket');
+const { startMetricsService } = require('./services/metrics.service');
 
 // Crear Servidor HTTP montado sobre Express
 const server = http.createServer(app);
@@ -20,8 +21,9 @@ const io = new Server(server, {
     }
 });
 
-// Llamada a función de Socket.io
+// Llamada a función de Socket.io / Service
 setupMetricsSocket(io);
+startMetricsService(io);
 
 // Activar servidor HTTP unificado para escuchar las peticiones en el puerto específicado
 server.listen(PORT, () => {
