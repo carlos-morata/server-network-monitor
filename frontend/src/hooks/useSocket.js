@@ -7,7 +7,7 @@ const useSocket = () => {
 
     useEffect(() => {
         // Apuntar al endpoint y listener de evento actualizando estado
-        const socket = io(`${VITE_SOCKET_URL}`).o('metrics:update', (dataMetrics) => {
+        const socket = io(`${VITE_SOCKET_URL}`).on('metrics:update', (dataMetrics) => {
             setMetrics(dataMetrics)
         })
 
